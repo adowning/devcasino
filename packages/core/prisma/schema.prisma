@@ -1,0 +1,84 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt           DateTime             @default(now())
+  firstName           String?
+  friendRelationships FriendRelationship[] @relation(name: "acceptor")
+  id                  String               @id @default(cuid())
+  invites             FriendRelationship[] @relation(name: "inviter")
+  lastName            String?
+  password            String
+  privateMessages     PrivateMessage[]     @relation(name: "privateMessages")
+  receivedMessges     PrivateMessage[]     @relation(name: "receivedMessges")
+  roles               Json
+  roomMessages        RoomMessage[]
+  status              EnumUserStatus?
+  updatedAt           DateTime             @updatedAt
+  username            String               @unique
+}
+
+model Room {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomMessage {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  roomId    String?
+  sender    User?    @relation(fields: [senderId], references: [id])
+  senderId  String?
+  updatedAt DateTime @updatedAt
+}
+
+model PrivateMessage {
+  content    String?
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  receiver   User?    @relation(name: "receivedMessges", fields: [receiverId], references: [id])
+  receiverId String?
+  sender     User?    @relation(name: "privateMessages", fields: [senderId], references: [id])
+  senderId   String?
+  updatedAt  DateTime @updatedAt
+}
+
+model FriendRelationship {
+  acceptor   User?    @relation(name: "acceptor", fields: [acceptorId], references: [id])
+  acceptorId String?
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  inviter    User?    @relation(name: "inviter", fields: [inviterId], references: [id])
+  inviterId  String?
+  updatedAt  DateTime @updatedAt
+}
+
+model ArcadeGame {
+  commands           Int?
+  createdAt          DateTime @default(now())
+  fishDamages        String?
+  fishUpdateInterval Json?
+  gameBalanceInCents String?
+  gameCode           String?
+  gameId             String?
+  gameSettings       Int?
+  id                 String   @id @default(cuid())
+  payTables          Json?
+  sceneBullets       Json?
+  sceneFish          Int?
+  updatedAt          DateTime @updatedAt
+}
+
+enum EnumUserStatus {
+  Online
+  Offline
+  Busy
+}
