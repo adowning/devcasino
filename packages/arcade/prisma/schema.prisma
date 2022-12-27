@@ -1,0 +1,35 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  game      Game[]
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Game {
+  createdAt DateTime          @default(now())
+  gameType  EnumGameGameType?
+  id        String            @id @default(cuid())
+  name      String?
+  title     String?
+  updatedAt DateTime          @updatedAt
+  users     User[]
+}
+
+enum EnumGameGameType {
+  Arcade
+  Slots
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@core/server",
+  "name": "@arcade-service/server",
   "private": true,
   "scripts": {
     "start": "nest start",
