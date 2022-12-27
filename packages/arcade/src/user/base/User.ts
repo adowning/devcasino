@@ -22,6 +22,7 @@ import { Type } from "class-transformer";
 import { Game } from "../../game/base/Game";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
+import { Session } from "../../session/base/Session";
 @ObjectType()
 class User {
   @ApiProperty({
@@ -77,6 +78,15 @@ class User {
   @IsJSON()
   @Field(() => GraphQLJSON)
   roles!: JsonValue;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Session],
+  })
+  @ValidateNested()
+  @Type(() => Session)
+  @IsOptional()
+  sessions?: Array<Session>;
 
   @ApiProperty({
     required: true,

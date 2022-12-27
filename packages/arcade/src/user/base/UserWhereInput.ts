@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { GameListRelationFilter } from "../../game/base/GameListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { SessionListRelationFilter } from "../../session/base/SessionListRelationFilter";
 @InputType()
 class UserWhereInput {
   @ApiProperty({
@@ -62,6 +63,18 @@ class UserWhereInput {
     nullable: true,
   })
   lastName?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => SessionListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => SessionListRelationFilter)
+  @IsOptional()
+  @Field(() => SessionListRelationFilter, {
+    nullable: true,
+  })
+  sessions?: SessionListRelationFilter;
 
   @ApiProperty({
     required: false,

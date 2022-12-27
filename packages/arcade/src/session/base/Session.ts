@@ -11,19 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsDate,
-  IsEnum,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from "class-validator";
+import { IsDate, IsOptional, ValidateNested, IsString } from "class-validator";
 import { Type } from "class-transformer";
-import { EnumGameGameType } from "./EnumGameGameType";
-import { Session } from "../../session/base/Session";
+import { Game } from "../../game/base/Game";
 import { User } from "../../user/base/User";
 @ObjectType()
-class Game {
+class Session {
   @ApiProperty({
     required: true,
   })
@@ -34,14 +27,23 @@ class Game {
 
   @ApiProperty({
     required: false,
-    enum: EnumGameGameType,
   })
-  @IsEnum(EnumGameGameType)
+  @IsDate()
+  @Type(() => Date)
   @IsOptional()
-  @Field(() => EnumGameGameType, {
+  @Field(() => Date, {
     nullable: true,
   })
-  gameType?: "Arcade" | "Slots" | null;
+  endTime!: Date | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Game,
+  })
+  @ValidateNested()
+  @Type(() => Game)
+  @IsOptional()
+  game?: Game | null;
 
   @ApiProperty({
     required: true,
@@ -50,37 +52,6 @@ class Game {
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  name!: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Session],
-  })
-  @ValidateNested()
-  @Type(() => Session)
-  @IsOptional()
-  sessions?: Array<Session>;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  title!: string | null;
 
   @ApiProperty({
     required: true,
@@ -92,11 +63,11 @@ class Game {
 
   @ApiProperty({
     required: false,
-    type: () => [User],
+    type: () => User,
   })
   @ValidateNested()
   @Type(() => User)
   @IsOptional()
-  users?: Array<User>;
+  user?: User | null;
 }
-export { Game };
+export { Session };

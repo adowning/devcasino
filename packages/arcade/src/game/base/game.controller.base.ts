@@ -27,6 +27,9 @@ import { GameWhereUniqueInput } from "./GameWhereUniqueInput";
 import { GameFindManyArgs } from "./GameFindManyArgs";
 import { GameUpdateInput } from "./GameUpdateInput";
 import { Game } from "./Game";
+import { SessionFindManyArgs } from "../../session/base/SessionFindManyArgs";
+import { Session } from "../../session/base/Session";
+import { SessionWhereUniqueInput } from "../../session/base/SessionWhereUniqueInput";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
@@ -187,6 +190,115 @@ export class GameControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Session",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/sessions")
+  @ApiNestedQuery(SessionFindManyArgs)
+  async findManySessions(
+    @common.Req() request: Request,
+    @common.Param() params: GameWhereUniqueInput
+  ): Promise<Session[]> {
+    const query = plainToClass(SessionFindManyArgs, request.query);
+    const results = await this.service.findSessions(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        endTime: true,
+
+        game: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Game",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/sessions")
+  async connectSessions(
+    @common.Param() params: GameWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Game",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/sessions")
+  async updateSessions(
+    @common.Param() params: GameWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Game",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/sessions")
+  async disconnectSessions(
+    @common.Param() params: GameWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

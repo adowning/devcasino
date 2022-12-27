@@ -13,8 +13,9 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { EnumGameGameType } from "./EnumGameGameType";
 import { IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
-import { UserUpdateManyWithoutGamesInput } from "./UserUpdateManyWithoutGamesInput";
+import { SessionUpdateManyWithoutGamesInput } from "./SessionUpdateManyWithoutGamesInput";
 import { Type } from "class-transformer";
+import { UserUpdateManyWithoutGamesInput } from "./UserUpdateManyWithoutGamesInput";
 @InputType()
 class GameUpdateInput {
   @ApiProperty({
@@ -38,6 +39,18 @@ class GameUpdateInput {
     nullable: true,
   })
   name?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SessionUpdateManyWithoutGamesInput,
+  })
+  @ValidateNested()
+  @Type(() => SessionUpdateManyWithoutGamesInput)
+  @IsOptional()
+  @Field(() => SessionUpdateManyWithoutGamesInput, {
+    nullable: true,
+  })
+  sessions?: SessionUpdateManyWithoutGamesInput;
 
   @ApiProperty({
     required: false,
