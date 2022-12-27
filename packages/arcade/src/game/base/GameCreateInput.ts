@@ -13,8 +13,9 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { EnumGameGameType } from "./EnumGameGameType";
 import { IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
-import { UserCreateNestedManyWithoutGamesInput } from "./UserCreateNestedManyWithoutGamesInput";
+import { SessionCreateNestedManyWithoutGamesInput } from "./SessionCreateNestedManyWithoutGamesInput";
 import { Type } from "class-transformer";
+import { UserCreateNestedManyWithoutGamesInput } from "./UserCreateNestedManyWithoutGamesInput";
 @InputType()
 class GameCreateInput {
   @ApiProperty({
@@ -38,6 +39,18 @@ class GameCreateInput {
     nullable: true,
   })
   name?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SessionCreateNestedManyWithoutGamesInput,
+  })
+  @ValidateNested()
+  @Type(() => SessionCreateNestedManyWithoutGamesInput)
+  @IsOptional()
+  @Field(() => SessionCreateNestedManyWithoutGamesInput, {
+    nullable: true,
+  })
+  sessions?: SessionCreateNestedManyWithoutGamesInput;
 
   @ApiProperty({
     required: false,

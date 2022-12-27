@@ -30,6 +30,9 @@ import { User } from "./User";
 import { GameFindManyArgs } from "../../game/base/GameFindManyArgs";
 import { Game } from "../../game/base/Game";
 import { GameWhereUniqueInput } from "../../game/base/GameWhereUniqueInput";
+import { SessionFindManyArgs } from "../../session/base/SessionFindManyArgs";
+import { Session } from "../../session/base/Session";
+import { SessionWhereUniqueInput } from "../../session/base/SessionWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class UserControllerBase {
@@ -282,6 +285,115 @@ export class UserControllerBase {
   ): Promise<void> {
     const data = {
       game: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Session",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/sessions")
+  @ApiNestedQuery(SessionFindManyArgs)
+  async findManySessions(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Session[]> {
+    const query = plainToClass(SessionFindManyArgs, request.query);
+    const results = await this.service.findSessions(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        endTime: true,
+
+        game: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/sessions")
+  async connectSessions(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/sessions")
+  async updateSessions(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/sessions")
+  async disconnectSessions(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: SessionWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      sessions: {
         disconnect: body,
       },
     };

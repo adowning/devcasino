@@ -16,6 +16,7 @@ import { IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { SessionListRelationFilter } from "../../session/base/SessionListRelationFilter";
 import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 @InputType()
 class GameWhereInput {
@@ -51,6 +52,18 @@ class GameWhereInput {
     nullable: true,
   })
   name?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => SessionListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => SessionListRelationFilter)
+  @IsOptional()
+  @Field(() => SessionListRelationFilter, {
+    nullable: true,
+  })
+  sessions?: SessionListRelationFilter;
 
   @ApiProperty({
     required: false,

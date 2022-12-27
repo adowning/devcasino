@@ -16,6 +16,7 @@ import { GameUpdateManyWithoutUsersInput } from "./GameUpdateManyWithoutUsersInp
 import { Type } from "class-transformer";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { SessionUpdateManyWithoutUsersInput } from "./SessionUpdateManyWithoutUsersInput";
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
@@ -72,6 +73,18 @@ class UserUpdateInput {
     nullable: true,
   })
   roles?: InputJsonValue;
+
+  @ApiProperty({
+    required: false,
+    type: () => SessionUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => SessionUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => SessionUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  sessions?: SessionUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,
