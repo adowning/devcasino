@@ -10,13 +10,7 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import {
-  Prisma,
-  User,
-  FriendRelationship,
-  PrivateMessage,
-  RoomMessage,
-} from "@prisma/client";
+import { Prisma, User, Game } from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -78,58 +72,14 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
-  async findFriendRelationships(
+  async findGame(
     parentId: string,
-    args: Prisma.FriendRelationshipFindManyArgs
-  ): Promise<FriendRelationship[]> {
+    args: Prisma.GameFindManyArgs
+  ): Promise<Game[]> {
     return this.prisma.user
       .findUniqueOrThrow({
         where: { id: parentId },
       })
-      .friendRelationships(args);
-  }
-
-  async findInvites(
-    parentId: string,
-    args: Prisma.FriendRelationshipFindManyArgs
-  ): Promise<FriendRelationship[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .invites(args);
-  }
-
-  async findPrivateMessages(
-    parentId: string,
-    args: Prisma.PrivateMessageFindManyArgs
-  ): Promise<PrivateMessage[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .privateMessages(args);
-  }
-
-  async findReceivedMessges(
-    parentId: string,
-    args: Prisma.PrivateMessageFindManyArgs
-  ): Promise<PrivateMessage[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .receivedMessges(args);
-  }
-
-  async findRoomMessages(
-    parentId: string,
-    args: Prisma.RoomMessageFindManyArgs
-  ): Promise<RoomMessage[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .roomMessages(args);
+      .game(args);
   }
 }
