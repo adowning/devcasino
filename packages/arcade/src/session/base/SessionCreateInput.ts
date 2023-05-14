@@ -15,6 +15,7 @@ import { IsDate, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { GameWhereUniqueInput } from "../../game/base/GameWhereUniqueInput";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+
 @InputType()
 class SessionCreateInput {
   @ApiProperty({
@@ -52,4 +53,5 @@ class SessionCreateInput {
   })
   user?: UserWhereUniqueInput | null;
 }
-export { SessionCreateInput };
+
+export { SessionCreateInput as SessionCreateInput };

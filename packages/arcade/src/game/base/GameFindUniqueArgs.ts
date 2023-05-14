@@ -18,4 +18,4 @@ class GameFindUniqueArgs {
   where!: GameWhereUniqueInput;
 }
 
-export { GameFindUniqueArgs };
+export { GameFindUniqueArgs as GameFindUniqueArgs };

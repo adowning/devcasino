@@ -16,6 +16,7 @@ import { IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
 import { SessionUpdateManyWithoutGamesInput } from "./SessionUpdateManyWithoutGamesInput";
 import { Type } from "class-transformer";
 import { UserUpdateManyWithoutGamesInput } from "./UserUpdateManyWithoutGamesInput";
+
 @InputType()
 class GameUpdateInput {
   @ApiProperty({
@@ -75,4 +76,5 @@ class GameUpdateInput {
   })
   users?: UserUpdateManyWithoutGamesInput;
 }
-export { GameUpdateInput };
+
+export { GameUpdateInput as GameUpdateInput };

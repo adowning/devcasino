@@ -11,13 +11,13 @@ https://docs.amplication.com/how-to/custom-code
   */
 import * as common from "@nestjs/common";
 import * as swagger from "@nestjs/swagger";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { GameService } from "../game.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
@@ -33,6 +33,7 @@ import { SessionWhereUniqueInput } from "../../session/base/SessionWhereUniqueIn
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class GameControllerBase {
@@ -40,16 +41,17 @@ export class GameControllerBase {
     protected readonly service: GameService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-
   @common.UseInterceptors(AclValidateRequestInterceptor)
+  @common.Post()
+  @swagger.ApiCreatedResponse({ type: Game })
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "create",
     possession: "any",
   })
-  @common.Post()
-  @swagger.ApiCreatedResponse({ type: Game })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: GameCreateInput): Promise<Game> {
     return await this.service.create({
       data: data,
@@ -65,15 +67,17 @@ export class GameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get()
+  @swagger.ApiOkResponse({ type: [Game] })
+  @ApiNestedQuery(GameFindManyArgs)
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "read",
     possession: "any",
   })
-  @common.Get()
-  @swagger.ApiOkResponse({ type: [Game] })
-  @swagger.ApiForbiddenResponse()
-  @ApiNestedQuery(GameFindManyArgs)
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Game[]> {
     const args = plainToClass(GameFindManyArgs, request.query);
     return this.service.findMany({
@@ -90,15 +94,17 @@ export class GameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id")
+  @swagger.ApiOkResponse({ type: Game })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "read",
     possession: "own",
   })
-  @common.Get("/:id")
-  @swagger.ApiOkResponse({ type: Game })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: GameWhereUniqueInput
   ): Promise<Game | null> {
@@ -122,15 +128,17 @@ export class GameControllerBase {
   }
 
   @common.UseInterceptors(AclValidateRequestInterceptor)
+  @common.Patch("/:id")
+  @swagger.ApiOkResponse({ type: Game })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id")
-  @swagger.ApiOkResponse({ type: Game })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() data: GameUpdateInput
@@ -158,15 +166,17 @@ export class GameControllerBase {
     }
   }
 
+  @common.Delete("/:id")
+  @swagger.ApiOkResponse({ type: Game })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "delete",
     possession: "any",
   })
-  @common.Delete("/:id")
-  @swagger.ApiOkResponse({ type: Game })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: GameWhereUniqueInput
   ): Promise<Game | null> {
@@ -193,13 +203,13 @@ export class GameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/sessions")
+  @ApiNestedQuery(SessionFindManyArgs)
   @nestAccessControl.UseRoles({
     resource: "Session",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/sessions")
-  @ApiNestedQuery(SessionFindManyArgs)
   async findManySessions(
     @common.Req() request: Request,
     @common.Param() params: GameWhereUniqueInput
@@ -235,12 +245,12 @@ export class GameControllerBase {
     return results;
   }
 
+  @common.Post("/:id/sessions")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/sessions")
   async connectSessions(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: SessionWhereUniqueInput[]
@@ -257,12 +267,12 @@ export class GameControllerBase {
     });
   }
 
+  @common.Patch("/:id/sessions")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/sessions")
   async updateSessions(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: SessionWhereUniqueInput[]
@@ -279,12 +289,12 @@ export class GameControllerBase {
     });
   }
 
+  @common.Delete("/:id/sessions")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/sessions")
   async disconnectSessions(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: SessionWhereUniqueInput[]
@@ -302,13 +312,13 @@ export class GameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/users")
+  @ApiNestedQuery(UserFindManyArgs)
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/users")
-  @ApiNestedQuery(UserFindManyArgs)
   async findManyUsers(
     @common.Req() request: Request,
     @common.Param() params: GameWhereUniqueInput
@@ -334,12 +344,12 @@ export class GameControllerBase {
     return results;
   }
 
+  @common.Post("/:id/users")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/users")
   async connectUsers(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -356,12 +366,12 @@ export class GameControllerBase {
     });
   }
 
+  @common.Patch("/:id/users")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/users")
   async updateUsers(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -378,12 +388,12 @@ export class GameControllerBase {
     });
   }
 
+  @common.Delete("/:id/users")
   @nestAccessControl.UseRoles({
     resource: "Game",
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/users")
   async disconnectUsers(
     @common.Param() params: GameWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]

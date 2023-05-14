@@ -17,6 +17,7 @@ import { IsOptional, ValidateNested } from "class-validator";
 import { GameWhereUniqueInput } from "../../game/base/GameWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+
 @InputType()
 class SessionWhereInput {
   @ApiProperty({
@@ -65,4 +66,5 @@ class SessionWhereInput {
   })
   user?: UserWhereUniqueInput;
 }
-export { SessionWhereInput };
+
+export { SessionWhereInput as SessionWhereInput };

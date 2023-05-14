@@ -73,4 +73,4 @@ class SessionOrderByInput {
   userId?: SortOrder;
 }
 
-export { SessionOrderByInput };
+export { SessionOrderByInput as SessionOrderByInput };

@@ -53,4 +53,4 @@ class SessionListRelationFilter {
   })
   none?: SessionWhereInput;
 }
-export { SessionListRelationFilter };
+export { SessionListRelationFilter as SessionListRelationFilter };

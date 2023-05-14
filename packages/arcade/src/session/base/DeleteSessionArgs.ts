@@ -18,4 +18,4 @@ class DeleteSessionArgs {
   where!: SessionWhereUniqueInput;
 }
 
-export { DeleteSessionArgs };
+export { DeleteSessionArgs as DeleteSessionArgs };

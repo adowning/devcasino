@@ -21,4 +21,4 @@ class UpdateGameArgs {
   data!: GameUpdateInput;
 }
 
-export { UpdateGameArgs };
+export { UpdateGameArgs as UpdateGameArgs };

@@ -18,4 +18,4 @@ class CreateSessionArgs {
   data!: SessionCreateInput;
 }
 
-export { CreateSessionArgs };
+export { CreateSessionArgs as CreateSessionArgs };

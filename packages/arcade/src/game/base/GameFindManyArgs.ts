@@ -50,4 +50,4 @@ class GameFindManyArgs {
   take?: number;
 }
 
-export { GameFindManyArgs };
+export { GameFindManyArgs as GameFindManyArgs };

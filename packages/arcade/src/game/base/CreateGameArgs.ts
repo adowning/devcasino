@@ -18,4 +18,4 @@ class CreateGameArgs {
   data!: GameCreateInput;
 }
 
-export { CreateGameArgs };
+export { CreateGameArgs as CreateGameArgs };
