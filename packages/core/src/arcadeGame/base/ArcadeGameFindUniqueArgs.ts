@@ -18,4 +18,4 @@ class ArcadeGameFindUniqueArgs {
   where!: ArcadeGameWhereUniqueInput;
 }
 
-export { ArcadeGameFindUniqueArgs };
+export { ArcadeGameFindUniqueArgs as ArcadeGameFindUniqueArgs };

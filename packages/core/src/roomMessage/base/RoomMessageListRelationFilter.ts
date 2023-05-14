@@ -53,4 +53,4 @@ class RoomMessageListRelationFilter {
   })
   none?: RoomMessageWhereInput;
 }
-export { RoomMessageListRelationFilter };
+export { RoomMessageListRelationFilter as RoomMessageListRelationFilter };

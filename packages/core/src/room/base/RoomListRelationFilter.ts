@@ -53,4 +53,4 @@ class RoomListRelationFilter {
   })
   none?: RoomWhereInput;
 }
-export { RoomListRelationFilter };
+export { RoomListRelationFilter as RoomListRelationFilter };

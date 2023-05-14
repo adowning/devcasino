@@ -18,4 +18,4 @@ class DeleteArcadeGameArgs {
   where!: ArcadeGameWhereUniqueInput;
 }
 
-export { DeleteArcadeGameArgs };
+export { DeleteArcadeGameArgs as DeleteArcadeGameArgs };

@@ -11,20 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  IsOptional,
-  ValidateNested,
-  IsJSON,
-  IsEnum,
-} from "class-validator";
-import { FriendRelationshipUpdateManyWithoutUsersInput } from "./FriendRelationshipUpdateManyWithoutUsersInput";
-import { Type } from "class-transformer";
-import { PrivateMessageUpdateManyWithoutUsersInput } from "./PrivateMessageUpdateManyWithoutUsersInput";
+import { IsString, IsOptional, ValidateNested, IsEnum } from "class-validator";
+import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
 import { RoomMessageUpdateManyWithoutUsersInput } from "./RoomMessageUpdateManyWithoutUsersInput";
+import { Type } from "class-transformer";
 import { EnumUserStatus } from "./EnumUserStatus";
+
 @InputType()
 class UserUpdateInput {
   @ApiProperty({
@@ -37,30 +31,6 @@ class UserUpdateInput {
     nullable: true,
   })
   firstName?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => FriendRelationshipUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => FriendRelationshipUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => FriendRelationshipUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  friendRelationships?: FriendRelationshipUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => FriendRelationshipUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => FriendRelationshipUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => FriendRelationshipUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  invites?: FriendRelationshipUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,
@@ -86,32 +56,8 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => PrivateMessageUpdateManyWithoutUsersInput,
   })
-  @ValidateNested()
-  @Type(() => PrivateMessageUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => PrivateMessageUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  privateMessages?: PrivateMessageUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => PrivateMessageUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => PrivateMessageUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => PrivateMessageUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  receivedMessges?: PrivateMessageUpdateManyWithoutUsersInput;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsJSON()
+  @IsJSONValue()
   @IsOptional()
   @Field(() => GraphQLJSON, {
     nullable: true,
@@ -152,4 +98,5 @@ class UserUpdateInput {
   })
   username?: string;
 }
-export { UserUpdateInput };
+
+export { UserUpdateInput as UserUpdateInput };

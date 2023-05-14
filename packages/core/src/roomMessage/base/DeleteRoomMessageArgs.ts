@@ -18,4 +18,4 @@ class DeleteRoomMessageArgs {
   where!: RoomMessageWhereUniqueInput;
 }
 
-export { DeleteRoomMessageArgs };
+export { DeleteRoomMessageArgs as DeleteRoomMessageArgs };

@@ -11,10 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsDate, IsString, IsJSON } from "class-validator";
+import { IsInt, IsOptional, IsDate, IsString } from "class-validator";
 import { Type } from "class-transformer";
+import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
+
 @ObjectType()
 class ArcadeGame {
   @ApiProperty({
@@ -50,7 +52,7 @@ class ArcadeGame {
   @ApiProperty({
     required: false,
   })
-  @IsJSON()
+  @IsJSONValue()
   @IsOptional()
   @Field(() => GraphQLJSON, {
     nullable: true,
@@ -112,7 +114,7 @@ class ArcadeGame {
   @ApiProperty({
     required: false,
   })
-  @IsJSON()
+  @IsJSONValue()
   @IsOptional()
   @Field(() => GraphQLJSON, {
     nullable: true,
@@ -122,7 +124,7 @@ class ArcadeGame {
   @ApiProperty({
     required: false,
   })
-  @IsJSON()
+  @IsJSONValue()
   @IsOptional()
   @Field(() => GraphQLJSON, {
     nullable: true,
@@ -148,4 +150,5 @@ class ArcadeGame {
   @Field(() => Date)
   updatedAt!: Date;
 }
-export { ArcadeGame };
+
+export { ArcadeGame as ArcadeGame };

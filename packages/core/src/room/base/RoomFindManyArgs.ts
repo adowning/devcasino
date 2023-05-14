@@ -50,4 +50,4 @@ class RoomFindManyArgs {
   take?: number;
 }
 
-export { RoomFindManyArgs };
+export { RoomFindManyArgs as RoomFindManyArgs };

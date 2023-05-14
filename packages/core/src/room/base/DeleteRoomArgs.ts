@@ -18,4 +18,4 @@ class DeleteRoomArgs {
   where!: RoomWhereUniqueInput;
 }
 
-export { DeleteRoomArgs };
+export { DeleteRoomArgs as DeleteRoomArgs };

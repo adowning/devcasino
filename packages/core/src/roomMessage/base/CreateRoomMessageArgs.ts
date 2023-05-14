@@ -18,4 +18,4 @@ class CreateRoomMessageArgs {
   data!: RoomMessageCreateInput;
 }
 
-export { CreateRoomMessageArgs };
+export { CreateRoomMessageArgs as CreateRoomMessageArgs };

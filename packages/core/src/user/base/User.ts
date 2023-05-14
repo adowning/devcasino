@@ -16,16 +16,15 @@ import {
   IsString,
   IsOptional,
   ValidateNested,
-  IsJSON,
   IsEnum,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { FriendRelationship } from "../../friendRelationship/base/FriendRelationship";
-import { PrivateMessage } from "../../privateMessage/base/PrivateMessage";
+import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 import { RoomMessage } from "../../roomMessage/base/RoomMessage";
 import { EnumUserStatus } from "./EnumUserStatus";
+
 @ObjectType()
 class User {
   @ApiProperty({
@@ -48,30 +47,12 @@ class User {
   firstName!: string | null;
 
   @ApiProperty({
-    required: false,
-    type: () => [FriendRelationship],
-  })
-  @ValidateNested()
-  @Type(() => FriendRelationship)
-  @IsOptional()
-  friendRelationships?: Array<FriendRelationship>;
-
-  @ApiProperty({
     required: true,
     type: String,
   })
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [FriendRelationship],
-  })
-  @ValidateNested()
-  @Type(() => FriendRelationship)
-  @IsOptional()
-  invites?: Array<FriendRelationship>;
 
   @ApiProperty({
     required: false,
@@ -85,27 +66,9 @@ class User {
   lastName!: string | null;
 
   @ApiProperty({
-    required: false,
-    type: () => [PrivateMessage],
-  })
-  @ValidateNested()
-  @Type(() => PrivateMessage)
-  @IsOptional()
-  privateMessages?: Array<PrivateMessage>;
-
-  @ApiProperty({
-    required: false,
-    type: () => [PrivateMessage],
-  })
-  @ValidateNested()
-  @Type(() => PrivateMessage)
-  @IsOptional()
-  receivedMessges?: Array<PrivateMessage>;
-
-  @ApiProperty({
     required: true,
   })
-  @IsJSON()
+  @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: JsonValue;
 
@@ -145,4 +108,5 @@ class User {
   @Field(() => String)
   username!: string;
 }
-export { User };
+
+export { User as User };

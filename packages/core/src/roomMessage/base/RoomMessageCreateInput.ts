@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
+
 @InputType()
 class RoomMessageCreateInput {
   @ApiProperty({
@@ -50,4 +51,5 @@ class RoomMessageCreateInput {
   })
   sender?: UserWhereUniqueInput | null;
 }
-export { RoomMessageCreateInput };
+
+export { RoomMessageCreateInput as RoomMessageCreateInput };

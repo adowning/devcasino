@@ -18,4 +18,4 @@ class CreateArcadeGameArgs {
   data!: ArcadeGameCreateInput;
 }
 
-export { CreateArcadeGameArgs };
+export { CreateArcadeGameArgs as CreateArcadeGameArgs };

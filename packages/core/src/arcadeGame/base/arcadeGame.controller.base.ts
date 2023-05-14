@@ -11,13 +11,13 @@ https://docs.amplication.com/how-to/custom-code
   */
 import * as common from "@nestjs/common";
 import * as swagger from "@nestjs/swagger";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { ArcadeGameService } from "../arcadeGame.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
@@ -27,6 +27,7 @@ import { ArcadeGameWhereUniqueInput } from "./ArcadeGameWhereUniqueInput";
 import { ArcadeGameFindManyArgs } from "./ArcadeGameFindManyArgs";
 import { ArcadeGameUpdateInput } from "./ArcadeGameUpdateInput";
 import { ArcadeGame } from "./ArcadeGame";
+
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ArcadeGameControllerBase {
@@ -34,16 +35,17 @@ export class ArcadeGameControllerBase {
     protected readonly service: ArcadeGameService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-
   @common.UseInterceptors(AclValidateRequestInterceptor)
+  @common.Post()
+  @swagger.ApiCreatedResponse({ type: ArcadeGame })
   @nestAccessControl.UseRoles({
     resource: "ArcadeGame",
     action: "create",
     possession: "any",
   })
-  @common.Post()
-  @swagger.ApiCreatedResponse({ type: ArcadeGame })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(
     @common.Body() data: ArcadeGameCreateInput
   ): Promise<ArcadeGame> {
@@ -68,15 +70,17 @@ export class ArcadeGameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get()
+  @swagger.ApiOkResponse({ type: [ArcadeGame] })
+  @ApiNestedQuery(ArcadeGameFindManyArgs)
   @nestAccessControl.UseRoles({
     resource: "ArcadeGame",
     action: "read",
     possession: "any",
   })
-  @common.Get()
-  @swagger.ApiOkResponse({ type: [ArcadeGame] })
-  @swagger.ApiForbiddenResponse()
-  @ApiNestedQuery(ArcadeGameFindManyArgs)
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<ArcadeGame[]> {
     const args = plainToClass(ArcadeGameFindManyArgs, request.query);
     return this.service.findMany({
@@ -100,15 +104,17 @@ export class ArcadeGameControllerBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id")
+  @swagger.ApiOkResponse({ type: ArcadeGame })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "ArcadeGame",
     action: "read",
     possession: "own",
   })
-  @common.Get("/:id")
-  @swagger.ApiOkResponse({ type: ArcadeGame })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: ArcadeGameWhereUniqueInput
   ): Promise<ArcadeGame | null> {
@@ -139,15 +145,17 @@ export class ArcadeGameControllerBase {
   }
 
   @common.UseInterceptors(AclValidateRequestInterceptor)
+  @common.Patch("/:id")
+  @swagger.ApiOkResponse({ type: ArcadeGame })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "ArcadeGame",
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id")
-  @swagger.ApiOkResponse({ type: ArcadeGame })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: ArcadeGameWhereUniqueInput,
     @common.Body() data: ArcadeGameUpdateInput
@@ -182,15 +190,17 @@ export class ArcadeGameControllerBase {
     }
   }
 
+  @common.Delete("/:id")
+  @swagger.ApiOkResponse({ type: ArcadeGame })
+  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @nestAccessControl.UseRoles({
     resource: "ArcadeGame",
     action: "delete",
     possession: "any",
   })
-  @common.Delete("/:id")
-  @swagger.ApiOkResponse({ type: ArcadeGame })
-  @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: ArcadeGameWhereUniqueInput
   ): Promise<ArcadeGame | null> {
