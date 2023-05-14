@@ -53,4 +53,4 @@ class ArcadeGameListRelationFilter {
   })
   none?: ArcadeGameWhereInput;
 }
-export { ArcadeGameListRelationFilter };
+export { ArcadeGameListRelationFilter as ArcadeGameListRelationFilter };

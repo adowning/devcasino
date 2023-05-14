@@ -73,4 +73,4 @@ class RoomMessageOrderByInput {
   updatedAt?: SortOrder;
 }
 
-export { RoomMessageOrderByInput };
+export { RoomMessageOrderByInput as RoomMessageOrderByInput };

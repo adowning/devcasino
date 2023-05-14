@@ -10,4 +10,4 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 class RoomUpdateInput {}
-export { RoomUpdateInput };
+export { RoomUpdateInput as RoomUpdateInput };

@@ -18,4 +18,4 @@ class RoomMessageFindUniqueArgs {
   where!: RoomMessageWhereUniqueInput;
 }
 
-export { RoomMessageFindUniqueArgs };
+export { RoomMessageFindUniqueArgs as RoomMessageFindUniqueArgs };

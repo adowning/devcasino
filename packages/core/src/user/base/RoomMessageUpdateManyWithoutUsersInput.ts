@@ -12,6 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { RoomMessageWhereUniqueInput } from "../../roomMessage/base/RoomMessageWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
+
 @InputType()
 class RoomMessageUpdateManyWithoutUsersInput {
   @Field(() => [RoomMessageWhereUniqueInput], {
@@ -41,4 +42,5 @@ class RoomMessageUpdateManyWithoutUsersInput {
   })
   set?: Array<RoomMessageWhereUniqueInput>;
 }
-export { RoomMessageUpdateManyWithoutUsersInput };
+
+export { RoomMessageUpdateManyWithoutUsersInput as RoomMessageUpdateManyWithoutUsersInput };

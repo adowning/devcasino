@@ -12,6 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
+
 @InputType()
 class ArcadeGameWhereUniqueInput {
   @ApiProperty({
@@ -22,4 +23,5 @@ class ArcadeGameWhereUniqueInput {
   @Field(() => String)
   id!: string;
 }
-export { ArcadeGameWhereUniqueInput };
+
+export { ArcadeGameWhereUniqueInput as ArcadeGameWhereUniqueInput };

@@ -50,4 +50,4 @@ class RoomMessageFindManyArgs {
   take?: number;
 }
 
-export { RoomMessageFindManyArgs };
+export { RoomMessageFindManyArgs as RoomMessageFindManyArgs };

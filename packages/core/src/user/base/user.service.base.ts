@@ -9,14 +9,8 @@ https://docs.amplication.com/how-to/custom-code
 
 ------------------------------------------------------------------------------
   */
-import { PrismaService } from "nestjs-prisma";
-import {
-  Prisma,
-  User,
-  FriendRelationship,
-  PrivateMessage,
-  RoomMessage,
-} from "@prisma/client";
+import { PrismaService } from "../../prisma/prisma.service";
+import { Prisma, User, RoomMessage } from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -76,50 +70,6 @@ export class UserServiceBase {
     args: Prisma.SelectSubset<T, Prisma.UserDeleteArgs>
   ): Promise<User> {
     return this.prisma.user.delete(args);
-  }
-
-  async findFriendRelationships(
-    parentId: string,
-    args: Prisma.FriendRelationshipFindManyArgs
-  ): Promise<FriendRelationship[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .friendRelationships(args);
-  }
-
-  async findInvites(
-    parentId: string,
-    args: Prisma.FriendRelationshipFindManyArgs
-  ): Promise<FriendRelationship[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .invites(args);
-  }
-
-  async findPrivateMessages(
-    parentId: string,
-    args: Prisma.PrivateMessageFindManyArgs
-  ): Promise<PrivateMessage[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .privateMessages(args);
-  }
-
-  async findReceivedMessges(
-    parentId: string,
-    args: Prisma.PrivateMessageFindManyArgs
-  ): Promise<PrivateMessage[]> {
-    return this.prisma.user
-      .findUniqueOrThrow({
-        where: { id: parentId },
-      })
-      .receivedMessges(args);
   }
 
   async findRoomMessages(

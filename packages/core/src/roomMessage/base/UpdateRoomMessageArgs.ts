@@ -21,4 +21,4 @@ class UpdateRoomMessageArgs {
   data!: RoomMessageUpdateInput;
 }
 
-export { UpdateRoomMessageArgs };
+export { UpdateRoomMessageArgs as UpdateRoomMessageArgs };

@@ -46,4 +46,4 @@ class RoomOrderByInput {
   updatedAt?: SortOrder;
 }
 
-export { RoomOrderByInput };
+export { RoomOrderByInput as RoomOrderByInput };

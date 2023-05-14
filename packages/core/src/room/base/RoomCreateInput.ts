@@ -10,4 +10,4 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 class RoomCreateInput {}
-export { RoomCreateInput };
+export { RoomCreateInput as RoomCreateInput };

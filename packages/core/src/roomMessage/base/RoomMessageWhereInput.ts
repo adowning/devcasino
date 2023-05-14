@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+
 @InputType()
 class RoomMessageWhereInput {
   @ApiProperty({
@@ -63,4 +64,5 @@ class RoomMessageWhereInput {
   })
   sender?: UserWhereUniqueInput;
 }
-export { RoomMessageWhereInput };
+
+export { RoomMessageWhereInput as RoomMessageWhereInput };

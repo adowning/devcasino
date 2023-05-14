@@ -136,4 +136,4 @@ class ArcadeGameOrderByInput {
   updatedAt?: SortOrder;
 }
 
-export { ArcadeGameOrderByInput };
+export { ArcadeGameOrderByInput as ArcadeGameOrderByInput };

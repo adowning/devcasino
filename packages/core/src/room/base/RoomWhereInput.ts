@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional } from "class-validator";
+
 @InputType()
 class RoomWhereInput {
   @ApiProperty({
@@ -27,4 +28,5 @@ class RoomWhereInput {
   })
   id?: StringFilter;
 }
-export { RoomWhereInput };
+
+export { RoomWhereInput as RoomWhereInput };

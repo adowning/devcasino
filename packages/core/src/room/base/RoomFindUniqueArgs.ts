@@ -18,4 +18,4 @@ class RoomFindUniqueArgs {
   where!: RoomWhereUniqueInput;
 }
 
-export { RoomFindUniqueArgs };
+export { RoomFindUniqueArgs as RoomFindUniqueArgs };
