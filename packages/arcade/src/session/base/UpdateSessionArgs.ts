@@ -21,4 +21,4 @@ class UpdateSessionArgs {
   data!: SessionUpdateInput;
 }
 
-export { UpdateSessionArgs };
+export { UpdateSessionArgs as UpdateSessionArgs };

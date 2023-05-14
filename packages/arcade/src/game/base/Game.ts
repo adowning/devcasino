@@ -22,6 +22,7 @@ import { Type } from "class-transformer";
 import { EnumGameGameType } from "./EnumGameGameType";
 import { Session } from "../../session/base/Session";
 import { User } from "../../user/base/User";
+
 @ObjectType()
 class Game {
   @ApiProperty({
@@ -99,4 +100,5 @@ class Game {
   @IsOptional()
   users?: Array<User>;
 }
-export { Game };
+
+export { Game as Game };

@@ -12,6 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { SessionWhereUniqueInput } from "../../session/base/SessionWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
+
 @InputType()
 class SessionCreateNestedManyWithoutUsersInput {
   @Field(() => [SessionWhereUniqueInput], {
@@ -23,4 +24,5 @@ class SessionCreateNestedManyWithoutUsersInput {
   })
   connect?: Array<SessionWhereUniqueInput>;
 }
-export { SessionCreateNestedManyWithoutUsersInput };
+
+export { SessionCreateNestedManyWithoutUsersInput as SessionCreateNestedManyWithoutUsersInput };

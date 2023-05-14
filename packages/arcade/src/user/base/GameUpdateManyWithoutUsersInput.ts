@@ -12,6 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { GameWhereUniqueInput } from "../../game/base/GameWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
+
 @InputType()
 class GameUpdateManyWithoutUsersInput {
   @Field(() => [GameWhereUniqueInput], {
@@ -41,4 +42,5 @@ class GameUpdateManyWithoutUsersInput {
   })
   set?: Array<GameWhereUniqueInput>;
 }
-export { GameUpdateManyWithoutUsersInput };
+
+export { GameUpdateManyWithoutUsersInput as GameUpdateManyWithoutUsersInput };

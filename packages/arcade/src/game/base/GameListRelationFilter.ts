@@ -53,4 +53,4 @@ class GameListRelationFilter {
   })
   none?: GameWhereInput;
 }
-export { GameListRelationFilter };
+export { GameListRelationFilter as GameListRelationFilter };

@@ -50,4 +50,4 @@ class SessionFindManyArgs {
   take?: number;
 }
 
-export { SessionFindManyArgs };
+export { SessionFindManyArgs as SessionFindManyArgs };

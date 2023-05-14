@@ -18,6 +18,7 @@ import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SessionListRelationFilter } from "../../session/base/SessionListRelationFilter";
 import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
+
 @InputType()
 class GameWhereInput {
   @ApiProperty({
@@ -88,4 +89,5 @@ class GameWhereInput {
   })
   users?: UserListRelationFilter;
 }
-export { GameWhereInput };
+
+export { GameWhereInput as GameWhereInput };

@@ -73,4 +73,4 @@ class GameOrderByInput {
   updatedAt?: SortOrder;
 }
 
-export { GameOrderByInput };
+export { GameOrderByInput as GameOrderByInput };

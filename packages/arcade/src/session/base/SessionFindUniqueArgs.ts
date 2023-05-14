@@ -18,4 +18,4 @@ class SessionFindUniqueArgs {
   where!: SessionWhereUniqueInput;
 }
 
-export { SessionFindUniqueArgs };
+export { SessionFindUniqueArgs as SessionFindUniqueArgs };

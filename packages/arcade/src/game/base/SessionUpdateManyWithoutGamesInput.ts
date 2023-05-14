@@ -12,6 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { SessionWhereUniqueInput } from "../../session/base/SessionWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
+
 @InputType()
 class SessionUpdateManyWithoutGamesInput {
   @Field(() => [SessionWhereUniqueInput], {
@@ -41,4 +42,5 @@ class SessionUpdateManyWithoutGamesInput {
   })
   set?: Array<SessionWhereUniqueInput>;
 }
-export { SessionUpdateManyWithoutGamesInput };
+
+export { SessionUpdateManyWithoutGamesInput as SessionUpdateManyWithoutGamesInput };

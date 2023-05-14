@@ -17,6 +17,7 @@ import { IsOptional, ValidateNested } from "class-validator";
 import { GameListRelationFilter } from "../../game/base/GameListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { SessionListRelationFilter } from "../../session/base/SessionListRelationFilter";
+
 @InputType()
 class UserWhereInput {
   @ApiProperty({
@@ -87,4 +88,5 @@ class UserWhereInput {
   })
   username?: StringFilter;
 }
-export { UserWhereInput };
+
+export { UserWhereInput as UserWhereInput };

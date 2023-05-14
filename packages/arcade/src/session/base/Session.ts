@@ -15,6 +15,7 @@ import { IsDate, IsOptional, ValidateNested, IsString } from "class-validator";
 import { Type } from "class-transformer";
 import { Game } from "../../game/base/Game";
 import { User } from "../../user/base/User";
+
 @ObjectType()
 class Session {
   @ApiProperty({
@@ -70,4 +71,5 @@ class Session {
   @IsOptional()
   user?: User | null;
 }
-export { Session };
+
+export { Session as Session };

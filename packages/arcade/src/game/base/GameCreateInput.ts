@@ -16,6 +16,7 @@ import { IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
 import { SessionCreateNestedManyWithoutGamesInput } from "./SessionCreateNestedManyWithoutGamesInput";
 import { Type } from "class-transformer";
 import { UserCreateNestedManyWithoutGamesInput } from "./UserCreateNestedManyWithoutGamesInput";
+
 @InputType()
 class GameCreateInput {
   @ApiProperty({
@@ -75,4 +76,5 @@ class GameCreateInput {
   })
   users?: UserCreateNestedManyWithoutGamesInput;
 }
-export { GameCreateInput };
+
+export { GameCreateInput as GameCreateInput };
